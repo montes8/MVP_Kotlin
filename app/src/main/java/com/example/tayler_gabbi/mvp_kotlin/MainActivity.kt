@@ -1,7 +1,9 @@
 package com.example.tayler_gabbi.mvp_kotlin
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -11,6 +13,17 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+           button_sesion.setOnClickListener {
 
+               val intent = Intent(this,LoginActivity::class.java)
+               startActivity(intent)
+           }
+
+        button_register.setOnClickListener {
+
+            val inten = Intent(this,RegistroActivity::class.java)
+            startActivity(inten)
+
+        }
     }
 }
