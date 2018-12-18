@@ -50,7 +50,11 @@ class ConexionSQLiteHelper{
 
 
 
-    fun insertarUser(values: ContentValues):Long{
+    fun insertarUser(usuario: Usuario):Long{
+
+        val values = ContentValues()
+        values.put("usuario", usuario.usuario)
+        values.put("contrasenia", usuario.password)
 
         val ID =sqlDB!!.insert(dbTablaUser,"",values)
         return ID
@@ -62,9 +66,9 @@ class ConexionSQLiteHelper{
         val cursor=consulta.query(sqlDB,projection,selection,selectionArgs,null,null,orderBy)
         return cursor
     }
-    fun borrarUser(selection: String,selectionArgs: Array<String>):Int{
-        val contador=sqlDB!!.delete(dbTablaUser,selection,selectionArgs)
-        return contador
+    fun borrarUser(id : String){
+        val parametro = arrayOf(id)
+        sqlDB!!.delete(dbTablaUser, "$columnaUserID=?", parametro)
     }
     fun actualizarUser(values: ContentValues, selection: String, selectionArgs: Array<String>):Int{
         val contador=sqlDB!!.update(dbTablaUser,values,selection,selectionArgs)
