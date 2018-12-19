@@ -5,14 +5,7 @@ import com.example.tayler_gabbi.mvp_kotlin.database.ConexionSQLiteHelper
 import com.example.tayler_gabbi.mvp_kotlin.presenter.LoginPresenter
 import com.example.tayler_gabbi.mvp_kotlin.view.LoginView
 
-class PresenterImpl : LoginPresenter{
-
-    var loginView : LoginView? = null
-
-    fun PresenterImpl(loginView: LoginView) {
-        this.loginView = loginView
-    }
-
+class PresenterImpl(private val loginView : LoginView) : LoginPresenter{
 
     override fun perfomLogin(userName: String, password: String, conn: ConexionSQLiteHelper) {
 
