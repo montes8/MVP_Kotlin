@@ -59,6 +59,23 @@ class ConexionSQLiteHelper{
         val ID =sqlDB!!.insert(dbTablaUser,"",values)
         return ID
     }
+
+    fun consultarListaUsuarios(): ArrayList<Usuario> {
+
+        var usuario: Usuario
+
+        val listaUsuarios = ArrayList<Usuario>()
+        val cursor = sqlDB!!.rawQuery("SELECT * FROM $dbTablaUser", null)
+
+        while (cursor.moveToNext()) {
+            usuario = Usuario()
+            usuario.usuId =cursor.getLong(0)
+            usuario.usuario = cursor.getString(1)
+            usuario.password= cursor.getString(2)
+        }
+        return listaUsuarios
+    }
+
     fun queryUser(projection:Array<String>,selection:String,selectionArgs:Array<String>,orderBy:String): Cursor {
 
         val consulta= SQLiteQueryBuilder()
@@ -74,6 +91,20 @@ class ConexionSQLiteHelper{
         val contador=sqlDB!!.update(dbTablaUser,values,selection,selectionArgs)
         return contador
     }
+
+
+    fun actualizarUsuario(usu: Usuario) {
+
+        val parametro = arrayOf<String>(usu.usuId.toString())
+
+        val values = ContentValues()
+        values.put(columnaUsuario, usu.usuario)
+        values.put(columnaContraseña, usu.password)
+
+        sqlDB!!.update(dbTablaUser, values, "$columnaUserID=?", parametro)
+
+    }
+
     fun userLogin(usuario:String,contraseña:String):Boolean{
         val query="select * from Usuarios where Usuario = '$usuario' and password = '$contraseña'"
         val cursor=sqlDB!!.rawQuery(query,null)
